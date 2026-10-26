@@ -20,12 +20,29 @@
 html,body{margin:0;min-height:100%}
 body{font:600 16px/1.5 var(--fb);color:var(--ink);background:#eef6f1;-webkit-font-smoothing:antialiased}
 body.lock{overflow:hidden}
+[hidden]{display:none!important}
 
 /* ── Сцена: фонове зображення 1672×940 з уже намальованими заголовком і чотирма картками ── */
 .stage{position:relative;width:100%;max-width:1672px;margin:0 auto;aspect-ratio:1672/940;
   background:url("affj7fs.png") center/100% 100% no-repeat;container-type:inline-size;overflow:hidden}
 .stage h1{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}  /* заголовок уже є на зображенні */
 .stage .sub{display:none}
+
+
+/* ── Острівець із фото на місці ноутбука (правий верхній кут) ── */
+.me{position:absolute;z-index:2;left:84.4%;top:7.2%;width:13.4%;aspect-ratio:1;margin:0;animation:float 7s ease-in-out infinite}
+.me::before{content:"";position:absolute;inset:-26%;border-radius:50%;z-index:-2;
+  background:radial-gradient(circle,rgba(255,255,255,.95) 0 42%,rgba(214,240,228,.85) 55%,rgba(232,244,252,.5) 66%,transparent 72%);filter:blur(.4cqw)}
+.me::after{content:"";position:absolute;inset:-9%;border-radius:50%;z-index:-1;border:.18cqw dashed rgba(79,179,162,.55);animation:orbit 40s linear infinite}
+.me .ring{display:block;position:absolute;inset:0;border-radius:50%;padding:.5cqw;
+  background:conic-gradient(from 200deg,#5fc2a6,#9fd8f0,#f6c98a,#c9b8ee,#5fc2a6);
+  box-shadow:0 1.4cqw 3cqw rgba(30,70,60,.22),0 0 0 .35cqw rgba(255,255,255,.9)}
+.me .ph{display:block;position:relative;width:100%;height:100%;border-radius:50%;overflow:hidden;border:.45cqw solid #fff;background:#dfeee6}
+.me img{position:absolute;width:200%;max-width:none;left:-46%;top:-13%;display:block}
+.me .dot{position:absolute;width:9%;aspect-ratio:1;border-radius:50%;background:#f6c98a;border:.25cqw solid #fff;box-shadow:0 .3cqw .8cqw rgba(0,0,0,.12);right:2%;top:10%}
+.me .dot.d2{width:6%;background:#5fc2a6;left:4%;right:auto;top:auto;bottom:14%}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-.5cqw)}}
+@keyframes orbit{to{transform:rotate(360deg)}}
 
 /* ── Кнопки поверх намальованих карток (координати у відсотках від зображення) ── */
 .card{position:absolute;display:flex;align-items:center;gap:3%;border:0;margin:0;padding:0 4%;
@@ -64,6 +81,12 @@ body.lock{overflow:hidden}
   .stage{aspect-ratio:auto;background:radial-gradient(circle at 0 100%,#f8f1df 0,transparent 55%),#eef6f1;padding:0 16px 28px;display:grid;gap:14px;align-content:start;min-height:100vh;container-type:normal}
   .stage::before{content:"";display:block;height:150px;margin:0 -16px -6px;background:url("affj7fs.png") right 0 top -46px/auto 780px no-repeat;
     -webkit-mask-image:linear-gradient(#000 55%,transparent);mask-image:linear-gradient(#000 55%,transparent)}
+  .me{left:auto;right:16px;top:14px;width:118px;z-index:3}
+  .me::before{filter:blur(3px)}
+  .me::after{border-width:2px}
+  .me .ring{padding:4px;box-shadow:0 10px 24px rgba(30,70,60,.2),0 0 0 3px rgba(255,255,255,.9)}
+  .me .ph{border-width:4px}
+  .me .dot{border-width:2px}
   .stage h1{position:static;width:auto;height:auto;overflow:visible;clip:auto;margin:0;font:800 2rem/1.1 var(--fh);color:var(--deep)}
   .stage .sub{display:block;margin:-6px 0 8px;font:italic 700 1rem/1.35 var(--fh);color:var(--deep)}
   .card{position:relative;inset:auto;width:100%;height:auto;min-height:92px;padding:16px 18px!important;gap:14px;border-radius:22px;
@@ -108,6 +131,10 @@ body.lock{overflow:hidden}
 
 <main class="stage">
   <h1>Мій професійний профіль</h1>
+  <figure class="me" aria-label="Фото: Алла Сіянко">
+    <span class="ring"><span class="ph"><img src="%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202026-10-26%20%D0%B2%2022.33.36.png" alt="Алла Василівна Сіянко" loading="eager"></span></span>
+    <span class="dot" aria-hidden="true"></span><span class="dot d2" aria-hidden="true"></span>
+  </figure>
   <p class="sub">Документи, досвід і рішення, з яких складається моя педагогічна історія</p>
 
   <button class="card c1" type="button" data-type="img" data-src="Диплом.jpg" data-title="Освіта і кваліфікація">
@@ -135,8 +162,8 @@ body.lock{overflow:hidden}
   <div class="box" id="box">
     <div class="bar">
       <b id="ovTitle">Документ</b>
-      <a class="btn" id="ovDl" download hidden><svg viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg><span class="t">Завантажити</span></a>
-      <a class="btn" id="ovOpen" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg><span class="t">Відкрити окремо</span></a>
+
+      <a class="btn" id="ovOpen" target="_blank" rel="noopener" hidden><svg viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg><span class="t">Відкрити окремо</span></a>
       <button class="btn x" type="button" id="ovClose" aria-label="Закрити">×</button>
     </div>
     <div class="view" id="view"></div>
@@ -158,7 +185,7 @@ function loadPdfJs(){
   });
 }
 function loading(t){view.innerHTML=`<div class="msg"><div class="spin"></div>${t}</div>`}
-function fail(src){view.className="view";view.innerHTML=`<div class="msg">Не вдалося відкрити документ.<br><br><a class="btn" href="${src}" target="_blank" rel="noopener">Відкрити окремо</a></div>`}
+function fail(src){view.className="view";view.innerHTML=`<div class="msg">Не вдалося відкрити документ. Оновіть сторінку і спробуйте ще раз.</div>`}
 
 async function showPdf(src,my){
   view.className="view paper";loading("Завантажую документ…");
@@ -182,8 +209,8 @@ async function showPdf(src,my){
 function open(btn){
   const {type,src,title}=btn.dataset,my=++token;lastBtn=btn;
   $("ovTitle").textContent=title;
-  $("ovOpen").href=src;
-  $("ovDl").hidden=type==="page";$("ovDl").href=src;
+  /* «Відкрити окремо» лише для сторінок (Вектор, Сертифікати); для диплома й атестаційного листа кнопок немає */
+  $("ovOpen").hidden=type!=="page";$("ovOpen").href=type==="page"?src:"#";
   box.classList.toggle("wide",type==="page");
   ov.hidden=false;document.body.classList.add("lock");
   if(type==="pdf")showPdf(src,my);
