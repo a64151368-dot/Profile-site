@@ -1,247 +1,208 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="uk">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Мій професійний профіль</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Мій професійний профіль · Сіянко Алла Василівна</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Manrope:wght@600;700;800&display=swap">
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { width: 100%; height: 100%; background: #efe9d8; }
-body {
-  overflow: hidden;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+/* ═══ Налаштування: файли лежать у цьому ж репозиторії (Profile-site) ═══ */
+:root{
+  --deep:#0f4a3c; --ink:#173b33; --txt:#4d6660;
+  --mint:#5fc2a6; --sky:#5c9fe0; --peach:#f2a54a; --teal:#4fb3a2;
+  --glass:rgba(255,255,255,.72); --edge:rgba(255,255,255,.95); --sh:rgba(30,70,60,.16);
+  --fh:"Playfair Display",Georgia,"Times New Roman",serif;
+  --fb:"Manrope","Segoe UI",system-ui,sans-serif;
 }
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{font:600 16px/1.5 var(--fb);color:var(--ink);background:#eef6f1;-webkit-font-smoothing:antialiased}
+body.lock{overflow:hidden}
 
-.viewport {
-  position: fixed; inset: 0;
-  overflow: auto;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
+/* ── Сцена: фонове зображення 1672×940 з уже намальованими заголовком і чотирма картками ── */
+.stage{position:relative;width:100%;max-width:1672px;margin:0 auto;aspect-ratio:1672/940;
+  background:url("affj7fs.png") center/100% 100% no-repeat;container-type:inline-size;overflow:hidden}
+.stage h1{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}  /* заголовок уже є на зображенні */
+.stage .sub{display:none}
+
+/* ── Кнопки поверх намальованих карток (координати у відсотках від зображення) ── */
+.card{position:absolute;display:flex;align-items:center;gap:3%;border:0;margin:0;padding:0 4%;
+  background:transparent;border-radius:2.4cqw;cursor:pointer;text-align:left;font:inherit;color:inherit;
+  transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s,background .35s;
+  animation:rise .7s cubic-bezier(.2,.8,.2,1) both}
+.c1{left:8.4%;top:33.9%;width:39.9%;height:20.6%;padding-left:13%;--a:var(--mint);animation-delay:.05s}
+.c2{left:51.7%;top:33.9%;width:39.9%;height:20.6%;padding-right:15%;--a:var(--sky);animation-delay:.15s}
+.c3{left:8.4%;top:58.1%;width:39.9%;height:20.6%;padding-left:13%;--a:var(--peach);animation-delay:.25s}
+.c4{left:51.7%;top:58.1%;width:39.9%;height:20.6%;padding-right:15%;--a:var(--teal);animation-delay:.35s}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}}
+
+.card .lbl{flex:1;min-width:0;font:800 2.25cqw/1.16 var(--fh);color:var(--deep);letter-spacing:-.01em;
+  text-shadow:0 1px 0 rgba(255,255,255,.9);transition:transform .35s}
+.card .arr{flex:none;width:5.3cqw;height:5.3cqw;border-radius:50%;display:grid;place-items:center;
+  background:radial-gradient(circle at 35% 28%,rgba(255,255,255,.95),color-mix(in srgb,var(--a) 55%,#fff) 45%,var(--a));
+  border:.35cqw solid #fff;box-shadow:0 .6cqw 1.6cqw color-mix(in srgb,var(--a) 45%,transparent),inset 0 -.3cqw .6cqw rgba(0,0,0,.06);
+  transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s}
+.card .arr svg{width:42%;height:42%;stroke:#fff;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 1px 1px rgba(0,0,0,.2))}
+/* відблиск, що пробігає по картці */
+.card::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.55) 50%,transparent 65%);background-size:250% 100%;background-position:120% 0;opacity:0;transition:opacity .3s}
+.card:hover,.card:focus-visible{transform:translateY(-.5cqw) scale(1.012);background:rgba(255,255,255,.18);
+  box-shadow:0 1.6cqw 3.2cqw var(--sh),0 0 0 .2cqw rgba(255,255,255,.9)}
+.card:hover::after,.card:focus-visible::after{opacity:1;animation:shine 1.1s ease}
+@keyframes shine{from{background-position:120% 0}to{background-position:-20% 0}}
+.card:hover .arr,.card:focus-visible .arr{transform:translateX(.5cqw) scale(1.08);box-shadow:0 .9cqw 2.2cqw color-mix(in srgb,var(--a) 60%,transparent)}
+.card:active{transform:scale(.985)}
+.card:focus-visible{outline:.25cqw solid var(--deep);outline-offset:.3cqw}
+.arr{animation:pulse 3.2s ease-in-out infinite}
+.c2 .arr{animation-delay:.8s}.c3 .arr{animation-delay:1.6s}.c4 .arr{animation-delay:2.4s}
+@keyframes pulse{0%,100%{box-shadow:0 .6cqw 1.6cqw color-mix(in srgb,var(--a) 45%,transparent)}50%{box-shadow:0 0 0 .9cqw color-mix(in srgb,var(--a) 18%,transparent),0 .6cqw 1.6cqw color-mix(in srgb,var(--a) 45%,transparent)}}
+
+/* ── Телефон: залишаємо зверху заголовок із зображення, картки стають списком ── */
+@media (max-width:700px){
+  .stage{aspect-ratio:auto;background:radial-gradient(circle at 0 100%,#f8f1df 0,transparent 55%),#eef6f1;padding:0 16px 28px;display:grid;gap:14px;align-content:start;min-height:100vh;container-type:normal}
+  .stage::before{content:"";display:block;height:150px;margin:0 -16px -6px;background:url("affj7fs.png") right 0 top -46px/auto 780px no-repeat;
+    -webkit-mask-image:linear-gradient(#000 55%,transparent);mask-image:linear-gradient(#000 55%,transparent)}
+  .stage h1{position:static;width:auto;height:auto;overflow:visible;clip:auto;margin:0;font:800 2rem/1.1 var(--fh);color:var(--deep)}
+  .stage .sub{display:block;margin:-6px 0 8px;font:italic 700 1rem/1.35 var(--fh);color:var(--deep)}
+  .card{position:relative;inset:auto;width:100%;height:auto;min-height:92px;padding:16px 18px!important;gap:14px;border-radius:22px;
+    background:linear-gradient(135deg,rgba(255,255,255,.88),color-mix(in srgb,var(--a) 16%,rgba(255,255,255,.8)));
+    border:1px solid var(--edge);box-shadow:0 10px 26px var(--sh);backdrop-filter:blur(8px)}
+  .card .lbl{font-size:1.2rem}
+  .card .arr{width:46px;height:46px;border-width:3px}
+  .card:hover,.card:focus-visible{transform:translateY(-2px)}
 }
-.viewport::-webkit-scrollbar { display: none; }
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
-.stage {
-  --sx: 0; --sy: 0;                     /* напрямок світла (керується курсором) */
-  position: relative;
-  width: max(100vw, calc(100vh * 1672 / 940));
-  height: max(100vh, calc(100vw * 940 / 1672));
-  background: #efe9d8;
-}
-
-/* Фон: чіткіші написи й зображення (різкість + легкий контраст) */
-.stage > img.bg {
-  position: absolute; inset: 0; width: 100%; height: 100%; display: block;
-  object-fit: fill; user-select: none; -webkit-user-drag: none;
-  filter: url(#sharpen) contrast(1.06) saturate(1.08);
-  image-rendering: -webkit-optimize-contrast;
-}
-
-/* Кнопки розміщені поверх фонового банера без додаткових плашок. */
-/* ---------- Мітка ---------- */
-.pin {
-  --c1: #ffffff; --c2: #73cdb2; --c3: #279b7d; --ring: 90, 205, 174;
-  position: absolute;
-  width: 52px; height: 52px; margin: -26px 0 0 -26px;
-  display: grid; place-items: center;
-  text-decoration: none; border-radius: 50%; outline: none;
-  z-index: 2; -webkit-tap-highlight-color: transparent;
-  transition: transform .22s cubic-bezier(.2,.8,.2,1), filter .22s ease;
-}
-.pin:hover, .pin:focus-visible { z-index: 10; transform: translateY(-2px) scale(1.06); filter: brightness(1.08); }
-
-.halo {
-  position: absolute; width: 50px; height: 50px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(var(--ring), .75) 0%, rgba(var(--ring), .25) 50%, rgba(var(--ring), 0) 72%);
-  animation: breathe 2.4s ease-in-out infinite;
-  pointer-events: none;
-}
-@keyframes breathe {
-  0%, 100% { transform: scale(.85); opacity: .75; }
-  50%      { transform: scale(1.25); opacity: 1; }
-}
-
-.ring {
-  position: absolute; width: 24px; height: 24px; border-radius: 50%;
-  border: 2px solid rgba(var(--ring), .95);
-  box-shadow: 0 0 10px rgba(var(--ring), .8);
-  animation: ping 2.4s cubic-bezier(.2,.6,.3,1) infinite;
-  pointer-events: none;
-}
-@keyframes ping {
-  0%   { transform: scale(.8); opacity: .95; }
-  100% { transform: scale(2.6); opacity: 0; }
-}
-
-.dot {
-  position: relative; display: grid; place-items: center;
-  width: 46px; height: 46px; border-radius: 50%;
-  background: radial-gradient(circle at 32% 25%, var(--c1), var(--c2) 56%, var(--c3));
-  border: 2px solid rgba(255,255,255,.98);
-  box-shadow: 0 3px 8px rgba(28,65,65,.18), 0 0 0 1px rgba(255,255,255,.4),
-              0 0 17px rgba(var(--ring), .58);
-  transition: transform .22s cubic-bezier(.34,1.56,.64,1), box-shadow .22s ease, filter .22s ease;
-}
-.dot::after {
-  content: ""; width: 10px; height: 10px;
-  border-top: 3px solid #fff; border-right: 3px solid #fff;
-  transform: translateX(-2px) rotate(45deg);
-  filter: drop-shadow(0 1px 1px rgba(0,0,0,.12));
-}
-.pin:hover .dot, .pin:focus-visible .dot {
-  transform: scale(1.08);
-  box-shadow: 0 5px 12px rgba(28,65,65,.24), 0 0 0 3px rgba(255,255,255,.96),
-              0 0 0 7px rgba(var(--ring), .24), 0 0 30px rgba(var(--ring), .95);
-  filter: saturate(1.2) brightness(1.06);
-}
-.pin:active .dot { transform: scale(1.1); }
-.pin:focus-visible { box-shadow: 0 0 0 3px #3d7a44; }
-
-/* ---------- Підпис ---------- */
-.label {
-  position: absolute; left: 50%; bottom: calc(100% - 4px);
-  transform: translate(-50%, 6px) scale(.96);
-  padding: 8px 13px; border-radius: 12px;
-  background: linear-gradient(160deg, #3b6444, #2a4a31);
-  color: #fff; font-size: 13px; font-weight: 600; line-height: 1.2; white-space: nowrap;
-  box-shadow: 0 10px 22px rgba(25,45,30,.4), 0 2px 4px rgba(25,45,30,.3);
-  opacity: 0; pointer-events: none;
-  transition: opacity .2s ease, transform .22s cubic-bezier(.34,1.56,.64,1);
-}
-.label::after {
-  content: ""; position: absolute; top: 100%; left: 50%; margin-left: -6px;
-  border: 6px solid transparent; border-top-color: #2a4a31;
-}
-.pin:hover .label, .pin:focus-visible .label { opacity: 1; transform: translate(-50%, 0) scale(1); }
-
-.pin.below .label { bottom: auto; top: calc(100% - 4px); }
-.pin.below .label::after { top: auto; bottom: 100%; border-top-color: transparent; border-bottom-color: #2a4a31; }
-
-.pin.left .label { left: auto; right: calc(100% - 6px); bottom: auto; top: 50%; transform: translate(6px, -50%) scale(.96); }
-.pin.left:hover .label, .pin.left:focus-visible .label { transform: translate(0, -50%) scale(1); }
-.pin.left .label::after { top: 50%; left: 100%; margin: -6px 0 0 0; border-top-color: transparent; border-left-color: #2a4a31; }
-
-.pin.right .label { left: calc(100% - 6px); bottom: auto; top: 50%; transform: translate(-6px, -50%) scale(.96); }
-.pin.right:hover .label, .pin.right:focus-visible .label { transform: translate(0, -50%) scale(1); }
-.pin.right .label::after { top: 50%; left: auto; right: 100%; margin: -6px 0 0 0; border-top-color: transparent; border-right-color: #2a4a31; }
-
-@media (hover: none) {
-  .label { opacity: 1; transform: translate(-50%, 0) scale(1); font-size: 11px; padding: 5px 9px; }
-  .pin.left .label, .pin.right .label { transform: translate(0, -50%) scale(1); }
-}
-
-/* ---------- «Подяка» ---------- */
-.pin.thanks { --c1: #fff5f7; --c2: #f28eaa; --c3: #d94d78; --ring: 242, 126, 162; }
-.pin.thanks .body { animation: bob 2.6s ease-in-out infinite; }
-@keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
-.pin.thanks .label { background: linear-gradient(160deg, #a1445f, #7f3049); }
-.pin.thanks .label::after { border-top-color: #7f3049; }
-.pin.thanks.right .label::after { border-top-color: transparent; border-right-color: #7f3049; }
-
-.pin.green { --c1: #ffffff; --c2: #9ce0c8; --c3: #55b99b; --ring: 105, 210, 180; }
-.pin.blue { --c1: #ffffff; --c2: #8bc8f0; --c3: #429bd5; --ring: 112, 190, 238; }
-.pin.lavender { --c1: #ffffff; --c2: #c2b4f3; --c3: #8d79d9; --ring: 177, 155, 238; }
-.pin.gold { --c1: #ffffff; --c2: #ffd58a; --c3: #e6a83f; --ring: 255, 202, 111; }
-.pin.teal { --c1: #ffffff; --c2: #8ed7c8; --c3: #48ad9c; --ring: 110, 210, 192; }
-
-.body { position: relative; display: grid; place-items: center; width: 100%; height: 100%; }
-
-@media (prefers-reduced-motion: reduce) {
-  .halo, .ring, .pin.thanks .body { animation: none !important; }
-  .ring { opacity: .5; }
-}
+/* ═══ Переглядач документів (зображення · PDF · сторінка) ═══ */
+.ov{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;
+  padding:max(14px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) max(14px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left));
+  background:rgba(232,244,238,.78);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);animation:fade .25s}
+.ov[hidden]{display:none}
+@keyframes fade{from{opacity:0}}
+.box{position:relative;width:min(980px,100%);height:min(92vh,100%);display:flex;flex-direction:column;background:#fff;border-radius:26px;
+  box-shadow:0 30px 70px rgba(20,60,50,.22);overflow:hidden;animation:pop .35s cubic-bezier(.2,.8,.2,1)}
+.box.wide{width:min(1280px,100%)}
+@keyframes pop{from{transform:translateY(18px) scale(.97);opacity:0}}
+.bar{display:flex;align-items:center;gap:10px;padding:12px 14px 12px 22px;border-bottom:1px solid #e4eee9;background:linear-gradient(180deg,#fbfdfc,#f3f8f5)}
+.bar b{flex:1;min-width:0;font:800 1.15rem/1.2 var(--fh);color:var(--deep);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.btn{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 14px;border-radius:99px;border:1px solid #d8e7e0;background:#fff;
+  font:700 .85rem var(--fb);color:var(--deep);text-decoration:none;cursor:pointer;transition:.2s;white-space:nowrap}
+.btn:hover{background:#eef7f2;border-color:var(--mint)}
+.btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.btn.x{width:40px;padding:0;justify-content:center;font-size:22px;line-height:1}
+.btn.x:hover{transform:rotate(90deg)}
+.view{flex:1;min-height:0;overflow:auto;background:#f3f8f5}
+.view.paper{padding:22px;display:grid;gap:22px;align-content:start;justify-items:center}
+.view.paper canvas,.view.paper img{display:block;width:100%;max-width:860px;height:auto;background:#fff;border-radius:8px;box-shadow:0 10px 30px rgba(20,60,50,.14)}
+.view iframe{display:block;width:100%;height:100%;border:0;background:#fff}
+.msg{padding:40px 20px;text-align:center;color:var(--txt)}
+.spin{width:38px;height:38px;margin:0 auto 12px;border-radius:50%;border:4px solid #dcebe4;border-top-color:var(--mint);animation:sp 1s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.pg{font:700 .8rem var(--fb);color:var(--txt);margin-top:-14px}
+@media (max-width:560px){.bar{padding-left:16px}.btn .t{display:none}.btn{padding:0 11px}.view.paper{padding:12px;gap:14px}.box{border-radius:20px}}
 </style>
 </head>
 <body>
 
-<!-- фільтр різкості для фонового зображення -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-  <filter id="sharpen" color-interpolation-filters="sRGB">
-    <feConvolveMatrix order="3" preserveAlpha="true" kernelMatrix="0 -0.45 0  -0.45 2.8 -0.45  0 -0.45 0"/>
-  </filter>
-</svg>
+<main class="stage">
+  <h1>Мій професійний профіль</h1>
+  <p class="sub">Документи, досвід і рішення, з яких складається моя педагогічна історія</p>
 
-<div class="viewport" id="viewport">
-  <div class="stage" id="stage">
-    <img class="bg" id="bg" alt="Мій професійний профіль — документи, досвід і рішення" draggable="false">
+  <button class="card c1" type="button" data-type="img" data-src="Диплом.jpg" data-title="Освіта і кваліфікація">
+    <span class="lbl">Освіта і кваліфікація</span>
+    <span class="arr" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></span>
+  </button>
+
+  <button class="card c2" type="button" data-type="page" data-src="https://a64151368-dot.github.io/Vector/" data-title="Вектор професійного розвитку">
+    <span class="lbl">Вектор професійного розвитку</span>
+    <span class="arr" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></span>
+  </button>
+
+  <button class="card c3" type="button" data-type="pdf" data-src="2022.pdf" data-title="Попередній атестаційний лист">
+    <span class="lbl">Попередній атестаційний лист</span>
+    <span class="arr" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></span>
+  </button>
+
+  <button class="card c4" type="button" data-type="page" data-src="https://a64151368-dot.github.io/certificates/" data-title="Сертифікати">
+    <span class="lbl">Сертифікати</span>
+    <span class="arr" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></span>
+  </button>
+</main>
+
+<div class="ov" id="ov" hidden role="dialog" aria-modal="true" aria-labelledby="ovTitle">
+  <div class="box" id="box">
+    <div class="bar">
+      <b id="ovTitle">Документ</b>
+      <a class="btn" id="ovDl" download hidden><svg viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg><span class="t">Завантажити</span></a>
+      <a class="btn" id="ovOpen" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg><span class="t">Відкрити окремо</span></a>
+      <button class="btn x" type="button" id="ovClose" aria-label="Закрити">×</button>
+    </div>
+    <div class="view" id="view"></div>
   </div>
 </div>
 
 <script>
-(function () {
-  var FILE_ID = '15jncejHzLmvfVGDOA01mWCALvkXiJzEE';
-  var RATIO_W = 1672, RATIO_H = 940;
+const PDFJS="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/";
+const $=id=>document.getElementById(id);
+const ov=$("ov"),box=$("box"),view=$("view");
+let lastBtn=null,token=0;
 
-  var LINKS = {
-    resume:       'https://canva.link/zmomzk1wc83qhk6',
-    education:    'https://canva.link/if0x8trumu3y448',
-    vector:       'https://canva.link/cfus5g3r8eog1go',   // індивідуальний план = вектор професійного розвитку
-    problems:     'https://canva.link/xzx1j6a01jjt7wt',
-    attestation:  'https://drive.google.com/file/d/1t92M6BPWflSn6EvGWPa1j7DApauwpxrE/view?usp=drive_link',
-    thanks:       'https://canva.link/utwxrb4mh5d6q6g',
-    certificates: 'https://a64151368-dot.github.io/certificates/'
-  };
-
-  // Центри круглих кнопок на наданому банері (у відсотках).
-  var PINS = [
-    { id:'education',    label:'Освіта і кваліфікація',        x:30.58, y:45.21, cls:'green' },
-    { id:'vector',       label:'Вектор професійного розвитку', x:61.43, y:45.21, cls:'blue' },
-    { id:'problems',     label:'Методична проблема',           x:93.13, y:45.21, cls:'lavender' },
-    { id:'attestation',  label:'Попередній атестаційний лист', x:30.58, y:69.89, cls:'gold' },
-    { id:'certificates', label:'Сертифікати',                  x:61.43, y:69.89, cls:'teal' },
-    { id:'thanks',       label:'Подяки',                       x:93.13, y:69.89, pos:'left', cls:'thanks' }
-  ];
-
-  /* ----- Новий фоновий банер із GitHub; резервні адреси попереднього фону ----- */
-  var bg = document.getElementById('bg');
-  var src = [
-    'https://raw.githubusercontent.com/a64151368-dot/Profile-site/main/%D0%9C%D1%96%D0%B8%CC%86%20%D0%BF%D1%80%D0%BE%D1%84%D0%B5%D1%81%D1%96%D0%B8%CC%86%D0%BD%D0%B8%D0%B8%CC%86%20%D0%BF%D1%80%D0%BE%D1%84%D1%96%D0%BB%D1%8C_%20%D0%BE%D1%81%D0%B2%D1%96%D1%82%D0%BD%D1%96%D0%B8%CC%86%20%D0%B4%D0%B0%D1%88%D0%B1%D0%BE%D1%80%D0%B4.png',
-    'https://lh3.googleusercontent.com/d/' + FILE_ID + '=w3000',
-    'https://drive.google.com/thumbnail?id=' + FILE_ID + '&sz=w3000',
-    'https://drive.google.com/uc?export=view&id=' + FILE_ID
-  ], i = 0;
-  bg.onerror = function () { if (++i < src.length) bg.src = src[i]; };
-  bg.src = src[0];
-
-  /* ----- На весь екран (cover) + центрування ----- */
-  var viewport = document.getElementById('viewport');
-  var stage = document.getElementById('stage');
-
-  function fit() {
-    var vw = viewport.clientWidth, vh = viewport.clientHeight;
-    var k = Math.max(vw / RATIO_W, vh / RATIO_H);
-    stage.style.width  = (RATIO_W * k) + 'px';
-    stage.style.height = (RATIO_H * k) + 'px';
-  }
-  function center() {
-    viewport.scrollLeft = (stage.offsetWidth  - viewport.clientWidth)  / 2;
-    viewport.scrollTop  = (stage.offsetHeight - viewport.clientHeight) / 2;
-  }
-  fit(); center();
-  window.addEventListener('resize', function () { fit(); center(); });
-  window.addEventListener('orientationchange', function () { setTimeout(function () { fit(); center(); }, 150); });
-
-  /* ----- Мітки ----- */
-  PINS.forEach(function (p, n) {
-    var a = document.createElement('a');
-    a.className = 'pin' + (p.cls ? ' ' + p.cls : '') + (p.pos ? ' ' + p.pos : '');
-    a.href = LINKS[p.id];
-    a.target = '_blank';
-    a.rel = 'noopener noreferrer';
-    a.setAttribute('aria-label', p.label);
-    a.style.left = p.x + '%';
-    a.style.top = p.y + '%';
-    var d = n * 0.25;
-    a.innerHTML =
-      '<span class="body">' +
-        '<span class="halo" style="animation-delay:' + d + 's"></span>' +
-        '<span class="ring" style="animation-delay:' + d + 's"></span>' +
-        '<span class="ring" style="animation-delay:' + (d + 0.8) + 's"></span>' +
-        '<span class="dot"></span>' +
-      '</span>' +
-      '<span class="label">' + p.label + '</span>';
-    stage.appendChild(a);
+function loadPdfJs(){
+  if(window.pdfjsLib)return Promise.resolve(window.pdfjsLib);
+  return new Promise((ok,fail)=>{
+    const s=document.createElement("script");s.src=PDFJS+"pdf.min.js";
+    s.onload=()=>{pdfjsLib.GlobalWorkerOptions.workerSrc=PDFJS+"pdf.worker.min.js";ok(pdfjsLib)};
+    s.onerror=fail;document.head.appendChild(s);
   });
-})();
+}
+function loading(t){view.innerHTML=`<div class="msg"><div class="spin"></div>${t}</div>`}
+function fail(src){view.className="view";view.innerHTML=`<div class="msg">Не вдалося відкрити документ.<br><br><a class="btn" href="${src}" target="_blank" rel="noopener">Відкрити окремо</a></div>`}
+
+async function showPdf(src,my){
+  view.className="view paper";loading("Завантажую документ…");
+  try{
+    const lib=await loadPdfJs();
+    const pdf=await lib.getDocument(src).promise;
+    if(my!==token)return;
+    view.innerHTML="";
+    const w=Math.min(view.clientWidth-44,860),dpr=Math.min(window.devicePixelRatio||1,2.5);
+    for(let i=1;i<=pdf.numPages;i++){
+      const page=await pdf.getPage(i);if(my!==token)return;
+      const vp=page.getViewport({scale:w/page.getViewport({scale:1}).width*dpr});
+      const c=document.createElement("canvas");c.width=vp.width;c.height=vp.height;c.setAttribute("aria-label","Сторінка "+i);
+      view.appendChild(c);
+      if(pdf.numPages>1){const p=document.createElement("div");p.className="pg";p.textContent=`сторінка ${i} з ${pdf.numPages}`;view.appendChild(p)}
+      await page.render({canvasContext:c.getContext("2d"),viewport:vp}).promise;
+    }
+  }catch(e){if(my===token)fail(src)}
+}
+
+function open(btn){
+  const {type,src,title}=btn.dataset,my=++token;lastBtn=btn;
+  $("ovTitle").textContent=title;
+  $("ovOpen").href=src;
+  $("ovDl").hidden=type==="page";$("ovDl").href=src;
+  box.classList.toggle("wide",type==="page");
+  ov.hidden=false;document.body.classList.add("lock");
+  if(type==="pdf")showPdf(src,my);
+  else if(type==="img"){
+    view.className="view paper";loading("Завантажую…");
+    const im=new Image();im.alt=title;
+    im.onload=()=>{if(my===token){view.innerHTML="";view.appendChild(im)}};
+    im.onerror=()=>{if(my===token)fail(src)};im.src=src;
+  }else{
+    view.className="view";view.innerHTML=`<iframe src="${src}" title="${title}" loading="eager" allowfullscreen></iframe>`;
+  }
+  $("ovClose").focus();
+}
+function close(){token++;ov.hidden=true;view.innerHTML="";document.body.classList.remove("lock");if(lastBtn)lastBtn.focus()}
+
+document.querySelectorAll(".card").forEach(b=>b.addEventListener("click",()=>open(b)));
+$("ovClose").onclick=close;
+ov.addEventListener("click",e=>{if(e.target===ov)close()});
+addEventListener("keydown",e=>{if(e.key==="Escape"&&!ov.hidden)close()});
 </script>
 </body>
 </html>
