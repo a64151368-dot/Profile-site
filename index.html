@@ -98,19 +98,19 @@ body.lock{overflow:hidden}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
-/* ═══ Листочки, що гойдаються від вітру ═══ */
+/* ═══ Акварельні гілочки, що гойдаються від вітру (лише у вільних зонах фону) ═══ */
 .leaves{position:absolute;inset:0;z-index:1;pointer-events:none}
-.cluster{position:absolute;width:0;height:0}
-.leaf{position:absolute;left:0;bottom:0;width:calc(var(--s)*1cqw);aspect-ratio:2/5;margin-left:calc(var(--s)*-.5cqw);
-  transform-origin:50% 100%;will-change:transform;filter:drop-shadow(0 .25cqw .35cqw rgba(30,70,60,.18))}
-.leaf svg,.fly svg{display:block;width:100%;height:100%;overflow:visible}
-/* листки, що прилітають із поривом вітру */
-.gust{position:fixed;inset:0;z-index:150;pointer-events:none;overflow:hidden}
-.fly{position:absolute;left:0;top:0;width:var(--w);aspect-ratio:2/5;will-change:transform,opacity;filter:drop-shadow(0 4px 6px rgba(30,70,60,.2))}
+.sprig{position:absolute;width:calc(var(--w)*1cqw);aspect-ratio:3/5;
+  margin-left:calc(var(--w)*-.5cqw);margin-top:calc(var(--w)*-1.6667cqw);
+  transform-origin:50% 100%;will-change:transform;mix-blend-mode:multiply;opacity:.9}
+.sprig svg,.fly svg{display:block;width:100%;height:100%;overflow:visible}
+/* листки пориву летять під напівпрозорим тлом вікна, а не поверх вмісту */
+.gust{position:fixed;inset:0;z-index:99;pointer-events:none;overflow:hidden}
+.fly{position:absolute;left:0;top:0;width:var(--w);aspect-ratio:1/2;will-change:transform,opacity;mix-blend-mode:multiply}
 @media (max-width:700px){
-  .leaf{width:calc(var(--s)*2.3vw);margin-left:calc(var(--s)*-1.15vw)}
-  .cluster:not(.m){display:none}
-  .stage>.card{z-index:2}
+  .stage{padding-bottom:150px}
+  .sprig{width:calc(var(--w)*3.4vw);margin-left:calc(var(--w)*-1.7vw);margin-top:calc(var(--w)*-5.667vw)}
+  .sprig:not(.m){display:none}
 }
 
 /* ═══ Переглядач документів (зображення · PDF · сторінка) ═══ */
@@ -245,66 +245,93 @@ function open(btn){
 }
 function close(){token++;ov.hidden=true;view.innerHTML="";document.body.classList.remove("lock");if(lastBtn)lastBtn.focus()}
 
-/* ═══ Вітер і листочки ═══ */
+/* ═══ Вітер і акварельні листочки ═══ */
 const calm=matchMedia("(prefers-reduced-motion:reduce)").matches;
-const GREENS=[["#8fd9a8","#3f9e7f"],["#a6e0b8","#4fb08a"],["#7ccf9a","#2f8a6a"],["#b5e6a6","#5fae6a"],["#6fc6a8","#2c7f66"]];
-let leafN=0;
-function leafSvg(){
-  const [a,b]=GREENS[leafN++%GREENS.length],id="lg"+leafN;
-  return `<svg viewBox="0 0 40 100"><defs><linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs>
-  <path d="M20 100V82C3 68 1 28 20 2c19 26 17 66 0 80" fill="url(#${id})"/>
-  <path d="M20 96V10M20 60l-9-9M20 45l9-9M20 32l-7-7" stroke="rgba(255,255,255,.55)" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>`;
+/* палітра з листків на картках: м'ятний, шавлієвий, бірюзовий, блакитний, лавандовий */
+const PAL=[["#e4f3ea","#6fae95"],["#dff0ea","#58998a"],["#ebf1de","#8fab7a"],["#e2edf5","#7ea7c6"],["#ece7f5","#a198c6"]];
+const SVGNS="http://www.w3.org/2000/svg";
+let gid=0;
+function grad([light,deep]){
+  const id="wl"+(++gid);
+  return [id,`<linearGradient id="${id}" x1="0" y1="1" x2=".25" y2="0"><stop offset="0" stop-color="${deep}" stop-opacity=".95"/><stop offset=".65" stop-color="${deep}" stop-opacity=".6"/><stop offset="1" stop-color="${light}" stop-opacity=".55"/></linearGradient>`];
 }
-/* гілочки: x,y — відсотки сцени; кути листків (0° — угору); m — показувати на телефоні */
-const CLUSTERS=[
-  {x:2.6,y:16,a:[25,55,85,115],s:2.6},
-  {x:3.4,y:57,a:[-5,30,65,100],s:3},
-  {x:3.5,y:98,a:[-25,5,35,65],s:3.4,m:1},
-  {x:50,y:99.5,a:[-55,-20,20,55],s:2.6},
-  {x:96.4,y:57,a:[5,-30,-65,-100],s:3},
-  {x:96.5,y:98,a:[25,-5,-35,-65],s:3.4,m:1},
+/* листок з основою в (0,0), що росте вгору: дві тональні половинки й тонка прожилка, як акварель */
+function leafShape(L,W,id){
+  return `<path d="M0 0C${W*.62} ${-L*.22} ${W*.56} ${-L*.72} 0 ${-L}C${-W*.56} ${-L*.72} ${-W*.62} ${-L*.22} 0 0Z" fill="url(#${id})"/>`+
+    `<path d="M0 0C${W*.62} ${-L*.22} ${W*.56} ${-L*.72} 0 ${-L}Q${W*.08} ${-L*.5} 0 0Z" fill="#fff" opacity=".24"/>`+
+    `<path d="M0 0Q${W*.07} ${-L*.5} 0 ${-L*.93}" stroke="#fff" stroke-opacity=".6" stroke-width=".7" fill="none"/>`;
+}
+/* гілочки: x,y — точка росту у % сцени; a — нахил (0° угору); w — ширина в cqw; b — вигин стебла; g — золота лінія; m — показувати на телефоні */
+const SPRIGS=[
+  {x:0,   y:61, a:50,  w:4.2, b:16,  p:0},               // ліворуч, між рослинами фону
+  {x:100, y:53, a:-48, w:4.2, b:-16, p:1},               // праворуч від карток
+  {x:21,  y:100,a:-12, w:5.3, b:-14, p:2, g:1, m:1},     // нижня смуга, ліва купка
+  {x:23.2,y:100,a:16,  w:4,   b:15,  p:0, m:1},
+  {x:42.6,y:100,a:12,  w:5,   b:14,  p:1, g:1, m:1},     // нижня смуга, ближче до центру (до столу)
+  {x:40.6,y:100,a:-20, w:3.7, b:-12, p:3, m:1},
 ];
-const leaves=[];
-CLUSTERS.forEach(c=>{
-  const g=document.createElement("div");g.className="cluster"+(c.m?" m":"");
-  g.style.left=c.x+"%";g.style.top=c.y+"%";
-  c.a.forEach((ang,i)=>{
-    const el=document.createElement("i");el.className="leaf";
-    el.style.setProperty("--s",(c.s*(.82+Math.random()*.3)).toFixed(2));
-    el.innerHTML=leafSvg();g.appendChild(el);
-    leaves.push({el,base:ang,amp:3+Math.random()*3,freq:.35+Math.random()*.25,ph:Math.random()*6.28,lag:i*.12});
-    el.style.transform=`rotate(${ang}deg)`;
+const sprigs=[],twigs=[];
+SPRIGS.forEach((c,si)=>{
+  const tx=c.b*.55,cx=c.b*2.2;                          // стебло: квадратична крива від (0,0) до (tx,-190)
+  const pt=t=>[2*(1-t)*t*cx+t*t*tx,-(2*(1-t)*t*100+t*t*190)];
+  const tan=t=>{const dx=2*(1-t)*cx+2*t*(tx-cx),dy=-(2*(1-t)*100+2*t*90);return Math.atan2(dx,-dy)*57.3};
+  let defs="",body=`<path d="M0 0Q${cx} -100 ${tx} -190" stroke="#8fb5a1" stroke-opacity=".8" stroke-width="1.5" fill="none" stroke-linecap="round"/>`;
+  if(c.g)body+=`<path d="M4 -2Q${cx+22} -70 ${tx+26} -120" stroke="#d4b267" stroke-opacity=".6" stroke-width=".7" fill="none"/>`;
+  const items=[];
+  [.3,.47,.63,.79,1].forEach((t,i)=>{
+    const tip=t===1,side=i%2?1:-1,[x,y]=pt(t);
+    const L=(tip?54:76)*(1-.34*t)+8,W=L*(.5+Math.random()*.07);
+    const a=tan(t)+(tip?0:side*(36+Math.random()*14));
+    const [id,d]=grad(PAL[(c.p+i)%3]);defs+=d;
+    items.push({x,y,a,amp:2.5+Math.random()*3,freq:.5+Math.random()*.4,ph:Math.random()*6.28});
+    body+=`<g data-i="${i}">${leafShape(L,W,id)}</g>`;
   });
-  $("leaves").appendChild(g);
+  const el=document.createElement("div");el.className="sprig"+(c.m?" m":"");
+  el.style.left=c.x+"%";el.style.top=c.y+"%";el.style.setProperty("--w",c.w);
+  el.innerHTML=`<svg viewBox="-60 -200 120 200" aria-hidden="true"><defs>${defs}</defs>${body}</svg>`;
+  el.querySelectorAll("g[data-i]").forEach((g,i)=>{const l=items[i];l.g=g;twigs.push(l);g.setAttribute("transform",`translate(${l.x.toFixed(1)} ${l.y.toFixed(1)}) rotate(${l.a.toFixed(1)})`)});
+  el.style.transform=`rotate(${c.a}deg)`;
+  sprigs.push({el,a:c.a,amp:1.6+Math.random()*1.2,freq:.22+Math.random()*.12,ph:si*1.3});
+  $("leaves").appendChild(el);
 });
 
 let wind=0,windTarget=0,last=performance.now(),gustTimer;
 function tick(now){
   const dt=Math.min((now-last)/1000,.05);last=now;
-  wind+=(windTarget-wind)*Math.min(1,dt*(windTarget>wind?3.5:1.2));   // порив наростає швидко, стихає повільно
-  for(const l of leaves){
-    l.ph+=dt*l.freq*(1+2.6*wind)*6.283;
-    const sway=l.amp*(1+3*wind)*Math.sin(l.ph)+l.amp*.35*Math.sin(l.ph*2.3+l.lag)*(.4+wind);
-    l.el.style.transform=`rotate(${(l.base+sway+wind*14).toFixed(2)}deg)`;  // вітер дме зліва направо
+  wind+=(windTarget-wind)*Math.min(1,dt*(windTarget>wind?3:1));   // порив наростає швидко, стихає повільно
+  for(const s of sprigs){                                          // уся гілочка хитається від основи
+    s.ph+=dt*s.freq*(1+2.2*wind)*6.283;
+    s.el.style.transform=`rotate(${(s.a+s.amp*(1+2.4*wind)*Math.sin(s.ph)+wind*7).toFixed(2)}deg)`;
+  }
+  for(const l of twigs){                                           // кожен листок тріпоче на черешку
+    l.ph+=dt*l.freq*(1+2.8*wind)*6.283;
+    const sw=l.amp*(1+2.6*wind)*Math.sin(l.ph)+l.amp*.3*Math.sin(l.ph*2.3)*(.3+wind)+wind*9;
+    l.g.setAttribute("transform",`translate(${l.x.toFixed(1)} ${l.y.toFixed(1)}) rotate(${(l.a+sw).toFixed(1)})`);
   }
   requestAnimationFrame(tick);
 }
 if(!calm)requestAnimationFrame(tick);
 
+/* листки пориву летять лише вільними смугами: між підзаголовком і картками та під картками */
 function flyLeaves(n){
-  const W=innerWidth,H=innerHeight;
+  const W=innerWidth,H=innerHeight,r=document.querySelector(".stage").getBoundingClientRect();
+  let bands=W>700?[[r.top+r.height*.25,r.top+r.height*.31],[r.top+r.height*.83,r.top+r.height*.96]]:[[H*.08,H*.92]];
+  bands=bands.filter(([a,b])=>b>0&&a<H);if(!bands.length)bands=[[H*.1,H*.9]];
   for(let i=0;i<n;i++){
+    const [b0,b1]=bands[i%bands.length],y0=b0+Math.random()*(b1-b0),dy=(Math.random()-.5)*(b1-b0)*.8;
+    const [id,d]=grad(PAL[i%PAL.length]),L=36,Wd=L*.52;
     const el=document.createElement("i");el.className="fly";
-    el.style.setProperty("--w",(16+Math.random()*16)+"px");el.innerHTML=leafSvg();
+    el.style.setProperty("--w",(13+Math.random()*11)+"px");el.style.opacity=.85;
+    el.innerHTML=`<svg viewBox="-10 -40 20 40"><defs>${d}</defs><g transform="translate(0 0)">${leafShape(L,Wd,id)}</g></svg>`;
     $("gust").appendChild(el);
-    const y0=H*(.05+Math.random()*.85),dy=(Math.random()-.5)*H*.35,r0=Math.random()*360,spin=(Math.random()>.5?1:-1)*(360+Math.random()*540);
+    const r0=Math.random()*360,spin=(Math.random()>.5?1:-1)*(240+Math.random()*360);
     el.animate([
-      {transform:`translate(-60px,${y0}px) rotate(${r0}deg)`,opacity:0},
-      {opacity:1,offset:.12},
-      {transform:`translate(${W*.35}px,${y0+dy*.6-40}px) rotate(${r0+spin*.4}deg) rotateX(60deg)`,offset:.4},
-      {transform:`translate(${W*.7}px,${y0+dy*.3+30}px) rotate(${r0+spin*.75}deg) rotateY(50deg)`,offset:.7},
-      {transform:`translate(${W+60}px,${y0+dy}px) rotate(${r0+spin}deg)`,opacity:.9}
-    ],{duration:1500+Math.random()*1100,delay:Math.random()*350,easing:"cubic-bezier(.35,.1,.4,1)",fill:"both"})
+      {transform:`translate(-40px,${y0}px) rotate(${r0}deg)`,opacity:0},
+      {opacity:.85,offset:.15},
+      {transform:`translate(${W*.4}px,${y0+dy*.5-10}px) rotate(${r0+spin*.45}deg) rotateY(55deg)`,offset:.45},
+      {transform:`translate(${W*.75}px,${y0+dy*.8+8}px) rotate(${r0+spin*.8}deg) rotateX(50deg)`,offset:.75},
+      {transform:`translate(${W+40}px,${y0+dy}px) rotate(${r0+spin}deg)`,opacity:0}
+    ],{duration:2000+Math.random()*1200,delay:Math.random()*400,easing:"cubic-bezier(.3,.1,.4,1)",fill:"both"})
       .onfinish=()=>el.remove();
   }
 }
@@ -321,9 +348,9 @@ function rustle(){
     bp.frequency.setValueAtTime(1800,t);bp.frequency.linearRampToValueAtTime(4200,t+.5);bp.frequency.linearRampToValueAtTime(2400,t+len);
     const hp=actx.createBiquadFilter();hp.type="highpass";hp.frequency.value=700;
     const g=actx.createGain();g.gain.setValueAtTime(0,t);
-    for(let s=.03;s<len;s+=.03){                         // обвідна пориву + дрібне потріскування листя
+    for(let s=.03;s<len;s+=.03){
       const env=Math.sin(Math.PI*Math.min(1,s/len))**1.4;
-      g.gain.linearRampToValueAtTime(.16*env*(.45+Math.random()*.55),t+s);
+      g.gain.linearRampToValueAtTime(.14*env*(.45+Math.random()*.55),t+s);
     }
     g.gain.linearRampToValueAtTime(0,t+len+.05);
     src.connect(bp).connect(hp).connect(g).connect(actx.destination);
@@ -335,7 +362,7 @@ function gust(){
   windTarget=1;clearTimeout(gustTimer);
   gustTimer=setTimeout(()=>windTarget=0,1100);
   rustle();
-  if(!calm)flyLeaves(innerWidth<700?9:14);
+  if(!calm)flyLeaves(innerWidth<700?6:8);
 }
 
 let pending=false;
