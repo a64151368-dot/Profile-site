@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Мій професійний профіль · Сіянко Алла Василівна</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Manrope:wght@600;700;800&display=swap">
+<style>
+/* ═══ Налаштування: файли лежать у цьому ж репозиторії (Profile-site) ═══ */
+:root{
+  --deep:#0f4a3c; --ink:#173b33; --txt:#4d6660;
+  --mint:#5fc2a6; --sky:#5c9fe0; --peach:#f2a54a; --teal:#4fb3a2;
+  --glass:rgba(255,255,255,.72); --edge:rgba(255,255,255,.95); --sh:rgba(30,70,60,.16);
+  --fh:"Playfair Display",Georgia,"Times New Roman",serif;
+  --fb:"Manrope","Segoe UI",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{font:600 16px/1.5 var(--fb);color:var(--ink);background:#eef6f1;-webkit-font-smoothing:antialiased}
+body.lock{overflow:hidden}
+[hidden]{display:none!important}
+
+/* ── Сцена: фонове зображення 1672×940 з уже намальованими заголовком і чотирма картками ── */
+.stage{position:relative;width:100%;max-width:1672px;margin:0 auto;aspect-ratio:1672/940;
+  background:url("affj7fs.png") center/100% 100% no-repeat;container-type:inline-size;overflow:hidden}
+.stage h1{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}  /* заголовок уже є на зображенні */
+.stage .sub{display:none}
+
+
+/* ── Острівець із фото на місці ноутбука (правий верхній кут) ── */
+.me{position:absolute;z-index:2;left:84.4%;top:7.2%;width:13.4%;aspect-ratio:1;margin:0;animation:float 7s ease-in-out infinite}
+.me::before{content:"";position:absolute;inset:-26%;border-radius:50%;z-index:-2;
+  background:radial-gradient(circle,rgba(255,255,255,.95) 0 42%,rgba(214,240,228,.85) 55%,rgba(232,244,252,.5) 66%,transparent 72%);filter:blur(.4cqw)}
+.me::after{content:"";position:absolute;inset:-9%;border-radius:50%;z-index:-1;border:.18cqw dashed rgba(79,179,162,.55);animation:orbit 40s linear infinite}
+.me .ring{display:block;position:absolute;inset:0;border-radius:50%;padding:.5cqw;
+  background:conic-gradient(from 200deg,#5fc2a6,#9fd8f0,#f6c98a,#c9b8ee,#5fc2a6);
+  box-shadow:0 1.4cqw 3cqw rgba(30,70,60,.22),0 0 0 .35cqw rgba(255,255,255,.9)}
+.me .ph{display:block;position:relative;width:100%;height:100%;border-radius:50%;overflow:hidden;border:.45cqw solid #fff;background:#dfeee6}
+.me img{position:absolute;width:200%;max-width:none;left:-46%;top:-13%;display:block}
+.me .dot{position:absolute;width:9%;aspect-ratio:1;border-radius:50%;background:#f6c98a;border:.25cqw solid #fff;box-shadow:0 .3cqw .8cqw rgba(0,0,0,.12);right:2%;top:10%}
+.me .dot.d2{width:6%;background:#5fc2a6;left:4%;right:auto;top:auto;bottom:14%}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-.5cqw)}}
+@keyframes orbit{to{transform:rotate(360deg)}}
+
+/* ── Кнопки поверх намальованих карток (координати у відсотках від зображення) ── */
+.card{position:absolute;display:flex;align-items:center;gap:3%;border:0;margin:0;padding:0 4%;
+  background:transparent;border-radius:2.4cqw;cursor:pointer;text-align:left;font:inherit;color:inherit;
+  transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s,background .35s;
+  animation:rise .7s cubic-bezier(.2,.8,.2,1) both}
+.c1{left:8.4%;top:33.9%;width:39.9%;height:20.6%;padding-left:13%;--a:var(--mint);animation-delay:.05s}
+.c2{left:51.7%;top:33.9%;width:39.9%;height:20.6%;padding-right:15%;--a:var(--sky);animation-delay:.15s}
+.c3{left:8.4%;top:58.1%;width:39.9%;height:20.6%;padding-left:13%;--a:var(--peach);animation-delay:.25s}
+.c4{left:51.7%;top:58.1%;width:39.9%;height:20.6%;padding-right:15%;--a:var(--teal);animation-delay:.35s}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}}
+
+.card .lbl{flex:1;min-width:0;font:800 2.25cqw/1.16 var(--fh);color:var(--deep);letter-spacing:-.01em;
+  text-shadow:0 1px 0 rgba(255,255,255,.9);transition:transform .35s}
+.card .arr{flex:none;width:5.3cqw;height:5.3cqw;border-radius:50%;display:grid;place-items:center;
+  background:radial-gradient(circle at 35% 28%,rgba(255,255,255,.95),color-mix(in srgb,var(--a) 55%,#fff) 45%,var(--a));
+  border:.35cqw solid #fff;box-shadow:0 .6cqw 1.6cqw color-mix(in srgb,var(--a) 45%,transparent),inset 0 -.3cqw .6cqw rgba(0,0,0,.06);
+  transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s}
+.card .arr svg{width:42%;height:42%;stroke:#fff;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 1px 1px rgba(0,0,0,.2))}
+/* відблиск, що пробігає по картці */
+.card::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.55) 50%,transparent 65%);background-size:250% 100%;background-position:120% 0;opacity:0;transition:opacity .3s}
+.card:hover,.card:focus-visible{transform:translateY(-.5cqw) scale(1.012);background:rgba(255,255,255,.18);
+  box-shadow:0 1.6cqw 3.2cqw var(--sh),0 0 0 .2cqw rgba(255,255,255,.9)}
+.card:hover::after,.card:focus-visible::after{opacity:1;animation:shine 1.1s ease}
+@keyframes shine{from{background-position:120% 0}to{background-position:-20% 0}}
+.card:hover .arr,.card:focus-visible .arr{transform:translateX(.5cqw) scale(1.08);box-shadow:0 .9cqw 2.2cqw color-mix(in srgb,var(--a) 60%,transparent)}
+.card:active{transform:scale(.985)}
+.card:focus-visible{outline:.25cqw solid var(--deep);outline-offset:.3cqw}
+.arr{animation:pulse 3.2s ease-in-out infinite}
+.c2 .arr{animation-delay:.8s}.c3 .arr{animation-delay:1.6s}.c4 .arr{animation-delay:2.4s}
+@keyframes pulse{0%,100%{box-shadow:0 .6cqw 1.6cqw color-mix(in srgb,var(--a) 45%,transparent)}50%{box-shadow:0 0 0 .9cqw color-mix(in srgb,var(--a) 18%,transparent),0 .6cqw 1.6cqw color-mix(in srgb,var(--a) 45%,transparent)}}
+
+/* ── Телефон: залишаємо зверху заголовок із зображення, картки стають списком ── */
+@media (max-width:700px){
+  .stage{aspect-ratio:auto;background:radial-gradient(circle at 0 100%,#f8f1df 0,transparent 55%),#eef6f1;padding:0 16px 28px;display:grid;gap:14px;align-content:start;min-height:100vh;container-type:normal}
+  .stage::before{content:"";display:block;height:150px;margin:0 -16px -6px;background:url("affj7fs.png") right 0 top -46px/auto 780px no-repeat;
+    -webkit-mask-image:linear-gradient(#000 55%,transparent);mask-image:linear-gradient(#000 55%,transparent)}
+  .me{left:auto;right:16px;top:14px;width:118px;z-index:3}
+  .me::before{filter:blur(3px)}
+  .me::after{border-width:2px}
+  .me .ring{padding:4px;box-shadow:0 10px 24px rgba(30,70,60,.2),0 0 0 3px rgba(255,255,255,.9)}
+  .me .ph{border-width:4px}
+  .me .dot{border-width:2px}
+  .stage h1{position:static;width:auto;height:auto;overflow:visible;clip:auto;margin:0;font:800 2rem/1.1 var(--fh);color:var(--deep)}
+  .stage .sub{display:block;margin:-6px 0 8px;font:italic 700 1rem/1.35 var(--fh);color:var(--deep)}
+  .card{position:relative;inset:auto;width:100%;height:auto;min-height:92px;padding:16px 18px!important;gap:14px;border-radius:22px;
+    background:linear-gradient(135deg,rgba(255,255,255,.88),color-mix(in srgb,var(--a) 16%,rgba(255,255,255,.8)));
+    border:1px solid var(--edge);box-shadow:0 10px 26px var(--sh);backdrop-filter:blur(8px)}
+  .card .lbl{font-size:1.2rem}
+  .card .arr{width:46px;height:46px;border-width:3px}
+  .card:hover,.card:focus-visible{transform:translateY(-2px)}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ═══ Акварельні гілочки, що гойдаються від вітру (лише у вільних зонах фону) ═══ */
+.leaves{position:absolute;inset:0;z-index:1;pointer-events:none}
+.sprig{position:absolute;width:calc(var(--w)*1cqw);aspect-ratio:3/5;
+  margin-left:calc(var(--w)*-.5cqw);margin-top:calc(var(--w)*-1.6667cqw);
+  transform-origin:50% 100%;will-change:transform;mix-blend-mode:multiply;opacity:.9}
+.sprig svg,.fly svg{display:block;width:100%;height:100%;overflow:visible}
+/* листки пориву летять під напівпрозорим тлом вікна, а не поверх вмісту */
+.gust{position:fixed;inset:0;z-index:99;pointer-events:none;overflow:hidden}
+.fly{position:absolute;left:0;top:0;width:var(--w);aspect-ratio:1/2;will-change:transform,opacity;mix-blend-mode:multiply}
+@media (max-width:700px){
+  .stage{padding-bottom:150px}
+  .sprig{width:calc(var(--w)*3.4vw);margin-left:calc(var(--w)*-1.7vw);margin-top:calc(var(--w)*-5.667vw)}
+  .sprig:not(.m){display:none}
+}
+
+/* ═══ Переглядач документів (зображення · PDF · сторінка) ═══ */
+.ov{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;
+  padding:max(14px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) max(14px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left));
+  background:rgba(232,244,238,.78);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);animation:fade .25s}
+.ov[hidden]{display:none}
+@keyframes fade{from{opacity:0}}
+.box{position:relative;width:min(980px,100%);height:min(92vh,100%);display:flex;flex-direction:column;background:#fff;border-radius:26px;
+  box-shadow:0 30px 70px rgba(20,60,50,.22);overflow:hidden;animation:pop .35s cubic-bezier(.2,.8,.2,1)}
+.box.wide{width:min(1280px,100%)}
+@keyframes pop{from{transform:translateY(18px) scale(.97);opacity:0}}
+.bar{display:flex;align-items:center;gap:10px;padding:12px 14px 12px 22px;border-bottom:1px solid #e4eee9;background:linear-gradient(180deg,#fbfdfc,#f3f8f5)}
+.bar b{flex:1;min-width:0;font:800 1.15rem/1.2 var(--fh);color:var(--deep);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.btn{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 14px;border-radius:99px;border:1px solid #d8e7e0;background:#fff;
+  font:700 .85rem var(--fb);color:var(--deep);text-decoration:none;cursor:pointer;transition:.2s;white-space:nowrap}
+.btn:hover{background:#eef7f2;border-color:var(--mint)}
+.btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.btn.x{width:40px;padding:0;justify-content:center;font-size:22px;line-height:1}
+.btn.x:hover{transform:rotate(90deg)}
+.view{flex:1;min-height:0;overflow:auto;background:#f3f8f5}
+.view.paper{padding:22px;display:grid;gap:22px;align-content:start;justify-items:center}
+.view.paper canvas,.view.paper img{display:block;width:100%;max-width:860px;height:auto;background:#fff;border-radius:8px;box-shadow:0 10px 30px rgba(20,60,50,.14)}
+.view iframe{display:block;width:100%;height:100%;border:0;background:#fff}
+.msg{padding:40px 20px;text-align:center;color:var(--txt)}
+.spin{width:38px;height:38px;margin:0 auto 12px;border-radius:50%;border:4px solid #dcebe4;border-top-color:var(--mint);animation:sp 1s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.pg{font:700 .8rem var(--fb);color:var(--txt);margin-top:-14px}
+@media (max-width:560px){.bar{padding-left:16px}.btn .t{display:none}.btn{padding:0 11px}.view.paper{padding:12px;gap:14px}.box{border-radius:20px}}
+</style>
+</head>
+<body>
+
+<main class="stage">
+  <h1>Мій професійний профіль</h1>
+  <figure class="me" aria-label="Фото: Алла Сіянко">
+    <span class="ring"><span class="ph"><img src="%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202026-10-26%20%D0%B2%2022.33.36.png" alt="Алла Василівна Сіянко" loading="eager"></span></span>
+    <span class="dot" aria-hidden="true"></span><span class="dot d2" aria-hidden="true"></span>
+  </figure>
+  <p class="sub">Документи, досвід і рішення, з яких складається моя педагогічна історія</p>
+
+  <button class="card c1" type="button" data-type="img" data-src="Диплом.jpg" data-title="Освіта і кваліфікація">
+    <span class="lbl">Освіта і кваліфікація</span>
+    <span class="arr" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></span>
+  </button>
+
+  <button class="card c2" type="button" data-type="page" data-src="https://a64151368-dot.github.io/Vector/" data-title="Вектор професійного розвитку">
+    <span class="lbl">Вектор професійного розвитку</span>
+    <span class="arr" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></span>
+  </button>
+
+  <button class="card c3" type="button" data-type="pdf" data-src="2022.pdf" data-title="Попередній атестаційний лист">
+    <span class="lbl">Попередній атестаційний лист</span>
+    <span class="arr" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></span>
+  </button>
+
+  <button class="card c4" type="button" data-type="page" data-src="https://a64151368-dot.github.io/certificates/" data-title="Сертифікати">
+    <span class="lbl">Сертифікати</span>
+    <span class="arr" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></span>
+  </button>
+
+  <div class="leaves" id="leaves" aria-hidden="true"></div>
+</main>
+
+<div class="gust" id="gust" aria-hidden="true"></div>
+
+<div class="ov" id="ov" hidden role="dialog" aria-modal="true" aria-labelledby="ovTitle">
+  <div class="box" id="box">
+    <div class="bar">
+      <b id="ovTitle">Документ</b>
+
+      <a class="btn" id="ovOpen" target="_blank" rel="noopener" hidden><svg viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg><span class="t">Відкрити окремо</span></a>
+      <button class="btn x" type="button" id="ovClose" aria-label="Закрити">×</button>
+    </div>
+    <div class="view" id="view"></div>
+  </div>
+</div>
+
+<script>
+const PDFJS="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/";
+const $=id=>document.getElementById(id);
+const ov=$("ov"),box=$("box"),view=$("view");
+let lastBtn=null,token=0;
+
+function loadPdfJs(){
+  if(window.pdfjsLib)return Promise.resolve(window.pdfjsLib);
+  return new Promise((ok,fail)=>{
+    const s=document.createElement("script");s.src=PDFJS+"pdf.min.js";
+    s.onload=()=>{pdfjsLib.GlobalWorkerOptions.workerSrc=PDFJS+"pdf.worker.min.js";ok(pdfjsLib)};
+    s.onerror=fail;document.head.appendChild(s);
+  });
+}
+function loading(t){view.innerHTML=`<div class="msg"><div class="spin"></div>${t}</div>`}
+function fail(src){view.className="view";view.innerHTML=`<div class="msg">Не вдалося відкрити документ. Оновіть сторінку і спробуйте ще раз.</div>`}
+
+async function showPdf(src,my){
+  view.className="view paper";loading("Завантажую документ…");
+  try{
+    const lib=await loadPdfJs();
+    const pdf=await lib.getDocument(src).promise;
+    if(my!==token)return;
+    view.innerHTML="";
+    const w=Math.min(view.clientWidth-44,860),dpr=Math.min(window.devicePixelRatio||1,2.5);
+    for(let i=1;i<=pdf.numPages;i++){
+      const page=await pdf.getPage(i);if(my!==token)return;
+      const vp=page.getViewport({scale:w/page.getViewport({scale:1}).width*dpr});
+      const c=document.createElement("canvas");c.width=vp.width;c.height=vp.height;c.setAttribute("aria-label","Сторінка "+i);
+      view.appendChild(c);
+      if(pdf.numPages>1){const p=document.createElement("div");p.className="pg";p.textContent=`сторінка ${i} з ${pdf.numPages}`;view.appendChild(p)}
+      await page.render({canvasContext:c.getContext("2d"),viewport:vp}).promise;
+    }
+  }catch(e){if(my===token)fail(src)}
+}
+
+function open(btn){
+  const {type,src,title}=btn.dataset,my=++token;lastBtn=btn;
+  $("ovTitle").textContent=title;
+  /* «Відкрити окремо» лише для сторінок (Вектор, Сертифікати); для диплома й атестаційного листа кнопок немає */
+  $("ovOpen").hidden=type!=="page";$("ovOpen").href=type==="page"?src:"#";
+  box.classList.toggle("wide",type==="page");
+  ov.hidden=false;document.body.classList.add("lock");
+  if(type==="pdf")showPdf(src,my);
+  else if(type==="img"){
+    view.className="view paper";loading("Завантажую…");
+    const im=new Image();im.alt=title;
+    im.onload=()=>{if(my===token){view.innerHTML="";view.appendChild(im)}};
+    im.onerror=()=>{if(my===token)fail(src)};im.src=src;
+  }else{
+    view.className="view";view.innerHTML=`<iframe src="${src}" title="${title}" loading="eager" allowfullscreen></iframe>`;
+  }
+  $("ovClose").focus();
+}
+function close(){token++;ov.hidden=true;view.innerHTML="";document.body.classList.remove("lock");if(lastBtn)lastBtn.focus()}
+
+/* ═══ Вітер і акварельні листочки ═══ */
+const calm=matchMedia("(prefers-reduced-motion:reduce)").matches;
+/* палітра з листків на картках: м'ятний, шавлієвий, бірюзовий, блакитний, лавандовий */
+const PAL=[["#e4f3ea","#6fae95"],["#dff0ea","#58998a"],["#ebf1de","#8fab7a"],["#e2edf5","#7ea7c6"],["#ece7f5","#a198c6"]];
+const SVGNS="http://www.w3.org/2000/svg";
+let gid=0;
+function grad([light,deep]){
+  const id="wl"+(++gid);
+  return [id,`<linearGradient id="${id}" x1="0" y1="1" x2=".25" y2="0"><stop offset="0" stop-color="${deep}" stop-opacity=".95"/><stop offset=".65" stop-color="${deep}" stop-opacity=".6"/><stop offset="1" stop-color="${light}" stop-opacity=".55"/></linearGradient>`];
+}
+/* листок з основою в (0,0), що росте вгору: дві тональні половинки й тонка прожилка, як акварель */
+function leafShape(L,W,id){
+  return `<path d="M0 0C${W*.62} ${-L*.22} ${W*.56} ${-L*.72} 0 ${-L}C${-W*.56} ${-L*.72} ${-W*.62} ${-L*.22} 0 0Z" fill="url(#${id})"/>`+
+    `<path d="M0 0C${W*.62} ${-L*.22} ${W*.56} ${-L*.72} 0 ${-L}Q${W*.08} ${-L*.5} 0 0Z" fill="#fff" opacity=".24"/>`+
+    `<path d="M0 0Q${W*.07} ${-L*.5} 0 ${-L*.93}" stroke="#fff" stroke-opacity=".6" stroke-width=".7" fill="none"/>`;
+}
+/* гілочки: x,y — точка росту у % сцени; a — нахил (0° угору); w — ширина в cqw; b — вигин стебла; g — золота лінія; m — показувати на телефоні */
+const SPRIGS=[
+  {x:0,   y:61, a:50,  w:4.2, b:16,  p:0},               // ліворуч, між рослинами фону
+  {x:100, y:53, a:-48, w:4.2, b:-16, p:1},               // праворуч від карток
+  {x:21,  y:100,a:-12, w:5.3, b:-14, p:2, g:1, m:1},     // нижня смуга, ліва купка
+  {x:23.2,y:100,a:16,  w:4,   b:15,  p:0, m:1},
+  {x:42.6,y:100,a:12,  w:5,   b:14,  p:1, g:1, m:1},     // нижня смуга, ближче до центру (до столу)
+  {x:40.6,y:100,a:-20, w:3.7, b:-12, p:3, m:1},
+];
+const sprigs=[],twigs=[];
+SPRIGS.forEach((c,si)=>{
+  const tx=c.b*.55,cx=c.b*2.2;                          // стебло: квадратична крива від (0,0) до (tx,-190)
+  const pt=t=>[2*(1-t)*t*cx+t*t*tx,-(2*(1-t)*t*100+t*t*190)];
+  const tan=t=>{const dx=2*(1-t)*cx+2*t*(tx-cx),dy=-(2*(1-t)*100+2*t*90);return Math.atan2(dx,-dy)*57.3};
+  let defs="",body=`<path d="M0 0Q${cx} -100 ${tx} -190" stroke="#8fb5a1" stroke-opacity=".8" stroke-width="1.5" fill="none" stroke-linecap="round"/>`;
+  if(c.g)body+=`<path d="M4 -2Q${cx+22} -70 ${tx+26} -120" stroke="#d4b267" stroke-opacity=".6" stroke-width=".7" fill="none"/>`;
+  const items=[];
+  [.3,.47,.63,.79,1].forEach((t,i)=>{
+    const tip=t===1,side=i%2?1:-1,[x,y]=pt(t);
+    const L=(tip?54:76)*(1-.34*t)+8,W=L*(.5+Math.random()*.07);
+    const a=tan(t)+(tip?0:side*(36+Math.random()*14));
+    const [id,d]=grad(PAL[(c.p+i)%3]);defs+=d;
+    items.push({x,y,a,amp:2.5+Math.random()*3,freq:.5+Math.random()*.4,ph:Math.random()*6.28});
+    body+=`<g data-i="${i}">${leafShape(L,W,id)}</g>`;
+  });
+  const el=document.createElement("div");el.className="sprig"+(c.m?" m":"");
+  el.style.left=c.x+"%";el.style.top=c.y+"%";el.style.setProperty("--w",c.w);
+  el.innerHTML=`<svg viewBox="-60 -200 120 200" aria-hidden="true"><defs>${defs}</defs>${body}</svg>`;
+  el.querySelectorAll("g[data-i]").forEach((g,i)=>{const l=items[i];l.g=g;twigs.push(l);g.setAttribute("transform",`translate(${l.x.toFixed(1)} ${l.y.toFixed(1)}) rotate(${l.a.toFixed(1)})`)});
+  el.style.transform=`rotate(${c.a}deg)`;
+  sprigs.push({el,a:c.a,amp:1.6+Math.random()*1.2,freq:.22+Math.random()*.12,ph:si*1.3});
+  $("leaves").appendChild(el);
+});
+
+let wind=0,windTarget=0,last=performance.now(),gustTimer;
+function tick(now){
+  const dt=Math.min((now-last)/1000,.05);last=now;
+  wind+=(windTarget-wind)*Math.min(1,dt*(windTarget>wind?3:1));   // порив наростає швидко, стихає повільно
+  for(const s of sprigs){                                          // уся гілочка хитається від основи
+    s.ph+=dt*s.freq*(1+2.2*wind)*6.283;
+    s.el.style.transform=`rotate(${(s.a+s.amp*(1+2.4*wind)*Math.sin(s.ph)+wind*7).toFixed(2)}deg)`;
+  }
+  for(const l of twigs){                                           // кожен листок тріпоче на черешку
+    l.ph+=dt*l.freq*(1+2.8*wind)*6.283;
+    const sw=l.amp*(1+2.6*wind)*Math.sin(l.ph)+l.amp*.3*Math.sin(l.ph*2.3)*(.3+wind)+wind*9;
+    l.g.setAttribute("transform",`translate(${l.x.toFixed(1)} ${l.y.toFixed(1)}) rotate(${(l.a+sw).toFixed(1)})`);
+  }
+  requestAnimationFrame(tick);
+}
+if(!calm)requestAnimationFrame(tick);
+
+/* листки пориву летять лише вільними смугами: між підзаголовком і картками та під картками */
+function flyLeaves(n){
+  const W=innerWidth,H=innerHeight,r=document.querySelector(".stage").getBoundingClientRect();
+  let bands=W>700?[[r.top+r.height*.25,r.top+r.height*.31],[r.top+r.height*.83,r.top+r.height*.96]]:[[H*.08,H*.92]];
+  bands=bands.filter(([a,b])=>b>0&&a<H);if(!bands.length)bands=[[H*.1,H*.9]];
+  for(let i=0;i<n;i++){
+    const [b0,b1]=bands[i%bands.length],y0=b0+Math.random()*(b1-b0),dy=(Math.random()-.5)*(b1-b0)*.8;
+    const [id,d]=grad(PAL[i%PAL.length]),L=36,Wd=L*.52;
+    const el=document.createElement("i");el.className="fly";
+    el.style.setProperty("--w",(13+Math.random()*11)+"px");el.style.opacity=.85;
+    el.innerHTML=`<svg viewBox="-10 -40 20 40"><defs>${d}</defs><g transform="translate(0 0)">${leafShape(L,Wd,id)}</g></svg>`;
+    $("gust").appendChild(el);
+    const r0=Math.random()*360,spin=(Math.random()>.5?1:-1)*(240+Math.random()*360);
+    el.animate([
+      {transform:`translate(-40px,${y0}px) rotate(${r0}deg)`,opacity:0},
+      {opacity:.85,offset:.15},
+      {transform:`translate(${W*.4}px,${y0+dy*.5-10}px) rotate(${r0+spin*.45}deg) rotateY(55deg)`,offset:.45},
+      {transform:`translate(${W*.75}px,${y0+dy*.8+8}px) rotate(${r0+spin*.8}deg) rotateX(50deg)`,offset:.75},
+      {transform:`translate(${W+40}px,${y0+dy}px) rotate(${r0+spin}deg)`,opacity:0}
+    ],{duration:2000+Math.random()*1200,delay:Math.random()*400,easing:"cubic-bezier(.3,.1,.4,1)",fill:"both"})
+      .onfinish=()=>el.remove();
+  }
+}
+
+/* шелест: шум, відфільтрований і «потріскуючий», без зовнішніх аудіофайлів */
+let actx,noise;
+function rustle(){
+  try{
+    actx=actx||new (window.AudioContext||window.webkitAudioContext)();
+    if(actx.state==="suspended")actx.resume();
+    if(!noise){noise=actx.createBuffer(1,actx.sampleRate*2,actx.sampleRate);const d=noise.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1}
+    const t=actx.currentTime,len=1.7,src=actx.createBufferSource();src.buffer=noise;
+    const bp=actx.createBiquadFilter();bp.type="bandpass";bp.Q.value=.7;
+    bp.frequency.setValueAtTime(1800,t);bp.frequency.linearRampToValueAtTime(4200,t+.5);bp.frequency.linearRampToValueAtTime(2400,t+len);
+    const hp=actx.createBiquadFilter();hp.type="highpass";hp.frequency.value=700;
+    const g=actx.createGain();g.gain.setValueAtTime(0,t);
+    for(let s=.03;s<len;s+=.03){
+      const env=Math.sin(Math.PI*Math.min(1,s/len))**1.4;
+      g.gain.linearRampToValueAtTime(.14*env*(.45+Math.random()*.55),t+s);
+    }
+    g.gain.linearRampToValueAtTime(0,t+len+.05);
+    src.connect(bp).connect(hp).connect(g).connect(actx.destination);
+    src.start(t);src.stop(t+len+.1);
+  }catch(e){}
+}
+
+function gust(){
+  windTarget=1;clearTimeout(gustTimer);
+  gustTimer=setTimeout(()=>windTarget=0,1100);
+  rustle();
+  if(!calm)flyLeaves(innerWidth<700?6:8);
+}
+
+let pending=false;
+document.querySelectorAll(".card").forEach(b=>b.addEventListener("click",()=>{
+  if(pending)return;pending=true;
+  gust();
+  setTimeout(()=>{pending=false;open(b)},calm?0:480);   // вікно відкривається на хвилі пориву
+}));
+$("ovClose").onclick=close;
+ov.addEventListener("click",e=>{if(e.target===ov)close()});
+addEventListener("keydown",e=>{if(e.key==="Escape"&&!ov.hidden)close()});
+</script>
+</body>
+</html>
